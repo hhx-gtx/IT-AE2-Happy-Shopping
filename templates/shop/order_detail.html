@@ -1,0 +1,40 @@
+{% extends 'shop/base.html' %}
+
+{% block title %}Order Details{% endblock %}
+
+{% load static %}
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/order_detail.css' %}">
+{% endblock %}
+
+{% block content %}
+<div class="order-header">
+    <a href="{% url 'orders' %}" class="back-btn">⬅ Back To Orders</a>
+    <h2 class="order-id">📦 Order ID: {{ order.order_id }}</h2>
+</div>
+
+<!-- Order Status -->
+<div class="order-status">
+    <h3>📜 Order Status: Processing</h3>
+</div>
+
+<!-- Order item list -->
+{% for item in order_items %}
+    <div class="product-item">
+        <h3>🔹 {{ item.product_name }}</h3>
+        <p>£{{ item.price }} | Quantity: {{ item.quantity }} | Price: £{{ item.price|floatformat:2 }}</p>
+    </div>
+{% endfor %}
+
+<!-- Order Total -->
+<div class="price-summary">
+    <p><strong>Total price:</strong> £{{ total_price|floatformat:2 }}</p>
+</div>
+
+<!-- Action Button -->
+<div class="price-summary">
+    <button>📄 Download Invoice</button>
+    <button>⭐ Review product</button>
+    <button>📞 Contact Customer Service</button>
+</div>
+{% endblock %}

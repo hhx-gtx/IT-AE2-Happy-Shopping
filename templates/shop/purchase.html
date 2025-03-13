@@ -1,0 +1,63 @@
+{% extends 'shop/base.html' %}
+
+{% block title %}Purchase{% endblock %}
+
+{% load static %}
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/purchase.css' %}">
+{% endblock %}
+
+{% block content %}
+<a href="{% url 'cart' %}">⬅ Back To Cart</a>
+
+<!-- User Information -->
+<div class="section-card">
+    <h3>📌 Delivery address:</h3>
+    <p><strong>{{ purchase_info.user_name }}</strong> | {{ purchase_info.address }} | {{ purchase_info.phone }}</p>
+    <button>✏️ Edit address</button>
+</div>
+
+<!-- Payment Methods -->
+<div class="section-card">
+    <h3>💳 Choose your payment method:</h3>
+    <p>{{ purchase_info.payment_method }}</p>
+    <button>✏️ Change payment method</button>
+</div>
+
+<!-- Shopping cart items -->
+{% if cart_items %}
+    <h3>🛒 Items from Cart</h3>
+    {% for item in cart_items %}
+        <div class="purchase-item-card">
+            <div class="purchase-item-info">
+                <h3>🔹 {{ item.name }}</h3>
+                <p>£{{ item.price }} | Quantity: {{ item.quantity }} | Price: £{{ item.price|floatformat:2 }}</p>
+            </div>
+        </div>
+    {% endfor %}
+{% endif %}
+
+<!-- Items to buy now -->
+{% if direct_purchase %}
+    <h3>⚡ Direct Purchase</h3>
+    <div class="purchase-item-card">
+        <div class="purchase-item-info">
+            <h3>🔹 {{ direct_purchase.name }}</h3>
+            <p>£{{ direct_purchase.price }} | Quantity: {{ direct_purchase.quantity }} | Price: £{{ direct_purchase.price|floatformat:2 }}</p>
+        </div>
+    </div>
+{% endif %}
+
+<!-- Order Total -->
+<div class="summary-and-button">
+    <div class="order-summary">
+        <p><strong>Total price:</strong> £{{ total_price|floatformat:2 }}</p>
+        <p><strong>Shipping:</strong> £{{ shipping_fee|floatformat:2 }}</p>
+        <p><strong>Actual payment:</strong> £{{ actual_payment|floatformat:2 }}</p>
+    </div>
+
+    <!-- Order Submit Button -->
+    <a href="{% url 'create_order' %}" class="checkout-button">✅ Place Order & Pay</a>
+</div>
+
+{% endblock %}

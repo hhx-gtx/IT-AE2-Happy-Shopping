@@ -1,0 +1,196 @@
+/* ============================= */
+/* Orders Page CSS (My Orders) */
+/* ============================= */
+
+/* Container for orders */
+.orders-container {
+    max-width: 1000px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+/* Back to Home button */
+.back-home-btn {
+    display: inline-block;
+    margin-bottom: 20px;
+    font-weight: bold;
+    font-size: 1.1rem;
+    color: #007bff;
+    text-decoration: none;
+}
+
+.back-home-btn:hover {
+    text-decoration: underline;
+}
+
+/* Page Title and Delete Button */
+.order-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.order-title {
+    font-size: 2rem;
+    margin: 0;
+    display: flex;
+    align-items: center;
+}
+
+/* Delete Mode Button */
+.delete-mode-btn {
+    background-color: #e63946;
+    color: white;
+    padding: 10px 20px;
+    font-size: 1rem;
+    border-radius: 8px;
+    border: none;
+    cursor: pointer;
+    font-weight: bold;
+}
+
+.delete-mode-btn:hover {
+    background-color: #cc2936;
+}
+
+/* Orders Table */
+.order-table {
+    width: 100%;
+    border-collapse: collapse;
+    table-layout: fixed;
+    margin-top: 20px;
+}
+
+.order-table th, .order-table td {
+    padding: 12px;
+    text-align: center;
+    vertical-align: middle;
+    border-bottom: 1px solid #ddd;
+}
+
+/* Row hover effect */
+.order-table tr:hover {
+    background-color: #f9f9f9;
+}
+
+/* Order ID */
+.order-id {
+    font-weight: bold;
+}
+
+/* Total Price */
+.order-total-price {
+    font-size: 1rem;
+    color: #333;
+}
+
+/* View Order Button */
+.view-order-btn {
+    padding: 8px 18px;
+    background-color: #06d6a0;
+    color: white;
+    border-radius: 8px;
+    text-decoration: none;
+    font-weight: bold;
+    display: inline-block;
+    width: 120px;
+    text-align: center;
+}
+
+.view-order-btn:hover {
+    background-color: #04b58a;
+}
+
+/* Checkbox */
+.orderCheckbox {
+    width: 20px;
+    height: 20px;
+    vertical-align: middle;
+    display: none; /* Default hidden */
+}
+
+/* Delete Selected Button */
+.delete-selected-btn {
+    background-color: #e63946;
+    color: white;
+    padding: 12px 25px;
+    font-size: 1rem;
+    border: none;
+    border-radius: 8px;
+    margin-top: 20px;
+    cursor: pointer;
+    font-weight: bold;
+}
+
+/* Empty order row */
+.order-empty {
+    text-align: center;
+    color: #999;
+    font-style: italic;
+}
+
+/* Pagination */
+.pagination {
+    margin: 30px 0;
+    text-align: center;
+}
+
+.pagination a {
+    padding: 8px 15px;
+    margin: 0 5px;
+    background-color: #007bff;
+    color: white;
+    text-decoration: none;
+    border-radius: 6px;
+    font-weight: bold;
+}
+
+.pagination a:hover {
+    background-color: #0056b3;
+}
+
+.pagination-info {
+    font-size: 1rem;
+    margin: 0 10px;
+    font-weight: bold;
+}
+
+/* Adjust column widths */
+.order-table th:first-child, .order-table td:first-child {
+    width: 60px; /* Checkbox column */
+}
+
+.order-table th:nth-child(2), .order-table td:nth-child(2) {
+    width: auto; /* Order ID */
+}
+
+.order-table th:nth-child(3), .order-table td:nth-child(3) {
+    width: 200px; /* Total Price */
+}
+
+.order-table th:nth-child(4), .order-table td:nth-child(4) {
+    width: 200px; /* Actions */
+}
+
+/* Responsive for mobile */
+@media (max-width: 768px) {
+    .order-table {
+        font-size: 0.9rem;
+    }
+
+    .order-header {
+        flex-direction: column;
+        gap: 10px;
+        align-items: flex-start;
+    }
+
+    .order-table th, .order-table td {
+        padding: 8px;
+    }
+
+    .pagination {
+        flex-wrap: wrap;
+        gap: 8px;
+    }
+}

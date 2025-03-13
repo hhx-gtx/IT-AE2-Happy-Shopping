@@ -1,0 +1,52 @@
+{% extends 'shop/base.html' %}
+{% load static %}
+
+{% block title %}Home - Happy Shopping{% endblock %}
+
+{% block extra_css %}
+<link href="{% static 'css/home.css' %}" rel="stylesheet">
+{% endblock %}
+
+{% block content %}
+
+<!-- Search Box -->
+<form method="GET" action="{% url 'home' %}" class="input-group mb-3">
+    <input type="text" name="q" class="form-control" placeholder="Search for products..." aria-label="Search" value="{{ request.GET.q }}">
+    <button class="btn btn-outline-secondary" type="submit">🔍</button>
+</form>
+
+<!-- Category column -->
+<div class="dropdown mb-4">
+    <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown">
+        Categories
+    </button>
+    <ul class="dropdown-menu">
+        <li><a class="dropdown-item" href="{% url 'home' %}">All</a></li>
+        {% for category in categories %}
+            <li><a class="dropdown-item" href="?category={{ category.name }}">{{ category.name }}</a></li>
+        {% endfor %}
+    </ul>
+</div>
+
+<!-- Current category tips -->
+{% if selected_category %}
+    <p class="current-category"><strong>Current Category:</strong> {{ selected_category.name }}</p>
+{% endif %}
+
+
+
+<!-- Product display -->
+<div class="product-list">
+    {% for product in products %}
+    <div class="product-card">
+        <a href="{% url 'product_detail' product.id %}">
+            <img src="/media/{{ product.image }}" class="product-image" alt="{{ product.name }}">
+        </a>
+        <h5 class="product-title">{{ product.name }}</h5>
+        <p class="price">£ {{ product.price }}</p>
+        <a href="{% url 'product_detail' product.id %}" class="detail-btn">Detail</a>
+    </div>
+    {% endfor %}
+</div>
+
+{% endblock %}

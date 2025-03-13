@@ -1,0 +1,106 @@
+/* ============================= */
+/* Order Detail Page Styles */
+/* ============================= */
+
+/* Header area with back button and order ID */
+.order-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+/* Back button */
+.back-btn {
+    text-decoration: none;
+    font-weight: bold;
+    color: #007bff;
+    font-size: 1rem;
+}
+
+.back-btn:hover {
+    text-decoration: underline;
+}
+
+/* Order ID */
+.order-id {
+    font-size: 1.2rem;
+    font-weight: bold;
+    margin: 0;
+}
+
+/* Order Status box */
+.order-status {
+    margin-bottom: 20px;
+    border: 1px solid #ddd;
+    padding: 12px;
+    border-radius: 8px;
+    background-color: #f9f9f9;
+}
+
+/* Each product in order */
+.product-item {
+    border: 1px solid #ccc;
+    padding: 15px;
+    border-radius: 10px;
+    background: #f5f5f5;
+    margin-bottom: 12px;
+}
+
+.product-item h3 {
+    margin: 0 0 8px 0;
+    font-size: 1.1rem;
+}
+
+.product-item p {
+    margin: 0;
+    font-size: 1rem;
+}
+
+/* Price summary (total price area) */
+.price-summary {
+    border: 2px solid #000;
+    padding: 15px;
+    border-radius: 12px;
+    background: #fff;
+    margin: 20px 0;
+    font-size: 1.3rem;
+    font-weight: bold;
+    color: #e63946;
+    text-align: center;
+}
+
+/* Action buttons */
+.action-buttons {
+    display: flex;
+    justify-content: flex-start;
+    gap: 12px;
+    margin-top: 20px;
+}
+
+/* General button style */
+.action-buttons button {
+    padding: 12px 20px;
+    font-size: 1rem;
+    border: 2px solid #333;
+    border-radius: 8px;
+    background: white;
+    cursor: pointer;
+    transition: 0.3s;
+    font-weight: bold;
+}
+
+/* Hover effect */
+.action-buttons button:hover {
+    background: #eee;
+}
+
+/* Special last button (Contact CS) */
+.action-buttons button:last-of-type {
+    margin-left: auto;
+    background: #f4f4f4;
+}
+
+.action-buttons button:last-of-type:hover {
+    background: #ddd;
+}

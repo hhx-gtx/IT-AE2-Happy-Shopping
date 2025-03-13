@@ -1,0 +1,169 @@
+/* =======================
+   Purchase Page CSS
+   ======================= */
+
+/* Back to Cart button */
+.back-btn {
+    text-decoration: none;
+    font-weight: bold;
+    color: #007bff;
+    font-size: 1rem;
+    margin-bottom: 20px;
+}
+
+.back-btn:hover {
+    text-decoration: underline;
+}
+
+/* Section Card for Address & Payment */
+.section-card {
+    display: flex; /* Horizontal layout */
+    justify-content: space-between; /* Space between text and button */
+    align-items: center;
+    padding: 15px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    margin-bottom: 15px;
+    background-color: #f9f9f9;
+}
+
+/* Address & Payment inside block */
+.section-card h3 {
+    margin: 0;
+    margin-bottom: 5px;
+    font-size: 18px;
+}
+
+.section-card p {
+    margin: 0;
+    font-size: 15px;
+}
+
+/* Right action buttons */
+.section-card button {
+    padding: 6px 14px;
+    background-color: white;
+    border: 2px solid black;
+    border-radius: 8px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: 0.2s ease-in-out;
+}
+
+.section-card button:hover {
+    background-color: #f0f0f0;
+}
+
+/* Responsive for smaller screens */
+@media (max-width: 600px) {
+    .section-card {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .section-card button {
+        margin-top: 10px;
+        width: 100%; /* Full width button */
+    }
+}
+
+/* Purchase Item Card for each product */
+.purchase-item-card {
+    border: 1px solid #ccc;
+    padding: 15px;
+    margin: 10px 0;
+    border-radius: 10px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #fff;
+}
+
+/* Product name and description */
+.purchase-item-card h3 {
+    margin: 0;
+    font-size: 1.2rem;
+}
+
+.purchase-item-card p {
+    margin: 0;
+    font-size: 0.95rem;
+    color: #333;
+}
+
+/* Product info alignment */
+.purchase-item-info {
+    flex: 1;
+}
+
+/* Order Summary (left box) */
+.order-summary {
+    margin: 30px 0;
+    padding: 20px;
+    border: 2px solid #333;
+    border-radius: 12px;
+    background-color: #f9f9f9;
+    width: 45%; /* Controlled width */
+    max-width: 500px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    font-size: 1.1rem;
+    text-align: left; /* Align left */
+}
+
+.order-summary p {
+    margin: 10px 0;
+}
+
+/* Highlight total payable */
+.order-summary p:last-child {
+    font-size: 1.3rem;
+    font-weight: bold;
+    color: #e63946;
+}
+
+/* Payment Button */
+.checkout-button {
+    background-color: #06d6a0;
+    color: white;
+    padding: 15px 30px;
+    border-radius: 10px;
+    font-weight: bold;
+    font-size: 1.2rem;
+    text-decoration: none;
+    text-align: center;
+    width: 250px;
+    display: inline-block;
+    margin: 0;
+    margin-bottom: 36px;
+}
+
+/* Hover Effect */
+.checkout-button:hover {
+    background-color: #04b58a;
+}
+
+/* Summary and Button (Right Order button and Left Summary aligned) */
+.summary-and-button {
+    display: flex;
+    justify-content: space-between; /* Split left & right */
+    align-items: flex-end; /* Align bottom */
+    width: 100%;
+    margin-top: 30px;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .summary-and-button {
+        flex-direction: column;
+        align-items: center;
+        gap: 20px;
+    }
+
+    .order-summary {
+        width: 100%; /* Full width for small screens */
+    }
+
+    .checkout-button {
+        width: 100%; /* Full width button */
+    }
+}

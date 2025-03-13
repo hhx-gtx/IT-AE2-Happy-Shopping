@@ -1,0 +1,144 @@
+/* base.css - General site-wide styles */
+
+/* Body and layout */
+body {
+    font-family: "Comic Sans MS", "Arial Rounded MT Bold", "Trebuchet MS", sans-serif;
+    background-color: #f7f7f7;
+    margin: 0;
+    padding: 0;
+}
+
+.main-content-wrapper {
+    width: 100%;
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 0 20px;
+}
+
+/* Navbar */
+.navbar {
+    margin-bottom: 20px;
+}
+
+/* Back button */
+.back-home, .back-btn, .back-home-btn {
+    display: inline-block;
+    margin: 20px;
+    font-size: 16px;
+    text-decoration: none;
+    color: black;
+    font-weight: bold;
+}
+
+/* Bootstrap button tweaks */
+.btn {
+    border-radius: 8px;
+    padding: 8px 16px;
+    transition: all 0.3s ease;
+}
+
+/* Generic link hover */
+a:hover {
+    text-decoration: underline;
+}
+
+/* Pagination */
+.pagination {
+    margin: 20px 0;
+    text-align: center;
+}
+
+.pagination a {
+    padding: 8px 15px;
+    margin: 0 5px;
+    background-color: #007bff;
+    color: white;
+    text-decoration: none;
+    border-radius: 6px;
+    font-weight: bold;
+}
+
+.pagination a:hover {
+    background-color: #0056b3;
+}
+
+.navbar .nav-link {
+    border: 2px solid #ddd;
+    border-radius: 8px;
+    padding: 6px 12px;
+    margin: 0 8px;
+    font-size: 15px;
+    font-weight: 500;
+    background-color: white;
+    transition: background-color 0.3s, color 0.3s;
+}
+
+
+.navbar .nav-link:hover {
+    background-color: #f0f0f0;
+    color: #333;
+    text-decoration: none;
+    border-color: #aaa;
+}
+
+/* Make Welcome text inline and aligned */
+.navbar span {
+    display: inline-block;
+    padding: 6px 12px;
+    margin: 0 8px;
+    font-size: 15px;
+    font-weight: 500;
+    color: #333;
+    background-color: white;
+    border: 2px solid #ddd;
+    border-radius: 8px;
+    line-height: 1.5;
+}
+
+/* Style logout link similar to other buttons */
+.navbar a[href*="logout"] {
+    border: 2px solid #ddd;
+    border-radius: 8px;
+    padding: 6px 12px;
+    margin: 0 8px;
+    font-size: 15px;
+    font-weight: 500;
+    background-color: white;
+    color: black;
+    transition: background-color 0.3s, color 0.3s;
+    text-decoration: none;
+}
+
+.navbar a[href*="logout"]:hover {
+    background-color: #f0f0f0;
+    color: #333;
+    border-color: #aaa;
+    text-decoration: none;
+}
+
+/* Fix Welcome message and Logout button alignment */
+.navbar span, .navbar a[href*="logout"] {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    height: 36px;
+    padding: 0 14px;
+    margin: 0 5px;
+    font-size: 15px;
+    font-weight: 500;
+    color: #333;
+    background-color: white;
+    border: 2px solid #ddd;
+    border-radius: 8px;
+    line-height: 1;
+    text-decoration: none;
+    box-sizing: border-box;
+}
+
+/* Hover effect for Logout button */
+.navbar a[href*="logout"]:hover {
+    background-color: #f0f0f0;
+    color: #333;
+    border-color: #aaa;
+    text-decoration: none;
+}

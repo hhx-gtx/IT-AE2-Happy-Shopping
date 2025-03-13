@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+{% load static %}
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Shopping Site{% endblock %}</title>
+    <!-- Bootstrap -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- input CSS -->
+    <link href="{% static 'css/base.css' %}" rel="stylesheet">
+    {% block extra_css %}{% endblock %}
+</head>
+<body>
+
+<!-- Top Navigation Bar -->
+<nav class="navbar navbar-expand-lg navbar-light bg-light border-bottom mb-4">
+    <div class="container">
+        <a class="navbar-brand" href="{% url 'home' %}">Happy Shopping</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
+            <ul class="navbar-nav">
+
+                {% if request.session.user_name %}
+                <li class="nav-item"><span>Welcome, <strong>{{ request.session.user_name }}</strong></span></li>
+                {% endif %}
+                <li class="nav-item"><a href="{% url 'logout' %}">Logout</a></li>
+
+                <li class="nav-item"><a class="nav-link" href="#">Region: UK</a></li>
+
+
+                <li class="nav-item"><a class="nav-link" href="{% url 'orders' %}">Already Purchased</a></li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'cart' %}">
+                        🛒 Cart ({{ request.session.cart|length|default:0 }})
+                    </a>
+                </li>
+                <li class="nav-item"><a class="nav-link" href="#">Favorites</a></li>
+            </ul>
+        </div>
+    </div>
+</nav>
+
+
+
+<!-- Subpage content -->
+<div class="main-content-wrapper">
+    {% block content %}
+    {% endblock %}
+</div>
+
+
+
+<!-- Import Bootstrap JS -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+<script src="{% static 'js/main.js' %}"></script>
+</body>
+</html>

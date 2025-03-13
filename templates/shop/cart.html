@@ -1,0 +1,64 @@
+{% extends 'shop/base.html' %}
+{% load static %}
+
+{% block title %}Your Cart{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" type="text/css" href="{% static 'css/cart.css' %}">
+{% endblock %}
+
+{% block content %}
+<a href="{% url 'home' %}">⬅ Back To Shopping</a>
+
+<!-- Cart Title -->
+<h2 class="cart-title">🛒 Your Cart ({{ cart_items|length }} items)</h2>
+
+<!-- cart product items -->
+{% if cart_items %}
+
+
+{% for item in cart_items %}
+
+    {% if item.cart_key and item.cart_key != "" %}
+        <div class="cart-item">
+            <img src="/media/{{ item.product.image }}" alt="{{ item.product.name }}" width="50">
+            <strong>{{ item.product.name }}</strong> - £{{ item.product.price }}
+
+            <!-- Display specifications -->
+            <p>
+                {% for spec, value in item.selected_variants.items %}
+                    <strong>{{ spec }}:</strong> {{ value }}
+                {% endfor %}
+            </p>
+
+            <form action="{% url 'update_cart' item.cart_key 'decrease' %}" method="POST">
+                {% csrf_token %}
+                <button type="submit">➖</button>
+            </form>
+
+            <span>{{ item.quantity }}</span>
+
+            <form action="{% url 'update_cart' item.cart_key 'increase' %}" method="POST">
+                {% csrf_token %}
+                <button type="submit">➕</button>
+            </form>
+
+            <p>Subtotal: £{{ item.subtotal }}</p>
+        </div>
+    {% endif %}
+{% endfor %}
+
+
+
+    <!-- Settlement Details -->
+    <div class="cart-summary">
+        <h3>Settlement Details</h3>
+        <p>Total price of goods: <strong>£{{ total_price }}</strong></p>
+        <button>🔄 Update Cart</button>
+        <a href="{% url 'purchase' %}" class="checkout-button">✅ CheckOut</a>
+    </div>
+{% else %}
+    <p>Your cart is empty. <a href="{% url 'home' %}">Go shopping!</a></p>
+{% endif %}
+
+{% endblock %}

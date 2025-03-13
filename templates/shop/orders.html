@@ -1,0 +1,100 @@
+{% extends 'shop/base.html' %}
+
+{% block title %}My Orders{% endblock %}
+
+{% load static %}
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/orders.css' %}">
+{% endblock %}
+
+{% block content %}
+<div class="orders-container">
+
+    <!-- Back to Home -->
+    <a href="{% url 'home' %}" class="back-home-btn">⬅ Back To Home</a>
+
+    <!-- Page Title + Delete Button -->
+    <div class="order-header">
+        <h2 class="order-title">🛒 My Orders</h2>
+        <button id="toggleDeleteMode" onclick="toggleDeleteMode()" class="delete-mode-btn">🗑️ Delete Orders</button>
+    </div>
+
+    <!-- Order List -->
+    <form id="deleteForm" action="{% url 'delete_orders' %}" method="POST">
+        {% csrf_token %}
+        <table class="order-table">
+            <!-- ⭐ The table header is only displayed in delete mode -->
+            <thead id="orderTableHead" style="display: none;">
+
+            </thead>
+
+            <tbody>
+                {% for order in page_obj %}
+                <tr class="order-row">
+                    <td><input type="checkbox" name="order_ids" value="{{ order.id }}" class="orderCheckbox" style="display: none;"></td>
+                    <td class="order-id">#{{ order.order_id }}</td>
+                    <td class="order-total-price">£{{ order.total_price }}</td>
+                    <td class="order-action">
+                        <a href="{% url 'order_detail' order_id=order.order_id %}" class="view-order-btn">View Order</a>
+                    </td>
+                </tr>
+                {% empty %}
+                <tr class="order-empty"><td colspan="4">No orders yet.</td></tr>
+                {% endfor %}
+            </tbody>
+        </table>
+
+        <!-- Delete button (hidden by default) -->
+        <button type="submit" id="deleteSelected" style="display: none;" class="delete-selected-btn">❌ Delete Selected</button>
+    </form>
+
+    <!-- Page navigation -->
+    <div class="pagination">
+        {% if page_obj.has_previous %}
+            <a href="?page=1" class="pagination-btn">⏪ First</a>
+            <a href="?page={{ page_obj.previous_page_number }}" class="pagination-btn">⬅ Previous</a>
+        {% endif %}
+
+        <span class="pagination-info">Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}</span>
+
+        {% if page_obj.has_next %}
+            <a href="?page={{ page_obj.next_page_number }}" class="pagination-btn">Next ➡</a>
+            <a href="?page={{ page_obj.paginator.num_pages }}" class="pagination-btn">Last ⏩</a>
+        {% endif %}
+    </div>
+</div>
+
+<!-- Delete mode switching logic -->
+<script>
+let deleteMode = false;  // Do not enter delete mode by default
+
+function toggleDeleteMode() {
+    deleteMode = !deleteMode;  // Toggle delete mode
+    let checkboxes = document.querySelectorAll(".orderCheckbox");
+    let deleteBtn = document.getElementById("deleteSelected");
+    let selectAll = document.getElementById("selectAll");
+    let tableHead = document.getElementById("orderTableHead"); // Get the table header
+
+    if (deleteMode) {
+        // Enter delete mode, display the check box and delete button, and display the table header
+        checkboxes.forEach(cb => cb.style.display = "inline");
+        deleteBtn.style.display = "block";
+        selectAll.style.display = "inline";
+        tableHead.style.display = "table-header-group"; // Show Header
+    } else {
+        // Exit delete mode, hide the checkbox and delete button, and hide the table header
+        checkboxes.forEach(cb => cb.style.display = "none");
+        deleteBtn.style.display = "none";
+        selectAll.style.display = "none";
+        tableHead.style.display = "none"; // Hide header
+    }
+}
+
+function toggleSelectAll() {
+    let checkboxes = document.querySelectorAll(".orderCheckbox");
+    let selectAll = document.getElementById("selectAll");
+    checkboxes.forEach(cb => cb.checked = selectAll.checked);
+}
+</script>
+
+{% endblock %}
