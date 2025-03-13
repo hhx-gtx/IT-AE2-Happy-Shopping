@@ -1,4 +1,4 @@
-# IT AE2 - Happy Shopping Web Application
+# IT AE2 - Happy Shopping Web Application - Group 111
 
 ## Project Description
 
