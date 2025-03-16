@@ -1,14 +1,18 @@
-from .models import Product, Category, ProductVariant, User
+from .models import Product, Category, ProductVariant, User, Order, OrderItem
 from django.shortcuts import render, redirect, get_object_or_404
 from django.http import JsonResponse
 import random
 from datetime import datetime, timedelta
-from .models import Order, OrderItem
 from django.core.paginator import Paginator
 from django.contrib import messages
+from .utils import session_login_required, calculate_total_price
 
 
 
+
+
+
+# Handle user login and session management
 def login_view(request):
     error_message = ""
     if request.method == "POST":
@@ -28,6 +32,9 @@ def login_view(request):
 
     return render(request, "shop/login.html", {'error_message': error_message})
 
+
+
+# Handle user logout and session clearing
 def logout_view(request):
     request.session.flush()
     return redirect('login')
@@ -36,10 +43,13 @@ def logout_view(request):
 
 
 
+
+# Display home page with product listing and search/filter functionality
+@session_login_required
 def home(request):
 
-    if 'user_id' not in request.session:
-        return redirect('login')
+    # if 'user_id' not in request.session:
+    #     return redirect('login')
     user_name = request.session.get('user_name', 'Guest')
 
     query = request.GET.get("q", "")  # Get search keywords
@@ -57,7 +67,6 @@ def home(request):
     # Filter: By Category
     # if category_id:
     #     products = products.filter(category_id=category_id)
-
 
     if category_name:
         try:
@@ -79,7 +88,7 @@ def home(request):
 
 
 
-
+# Display product detail with variants
 def product_detail(request, product_id):
     product = get_object_or_404(Product, id=product_id)
     variants = product.variants.all()  # Get all specifications of the current product
@@ -97,7 +106,10 @@ def product_detail(request, product_id):
 
 
 
-# Cart views
+
+
+# Display shopping cart content and total price
+@session_login_required
 def cart_view(request):
     cart = request.session.get('cart', {})
     print("Current Cart:", cart)  # Ensure that the data in the session is correct
@@ -132,8 +144,8 @@ def cart_view(request):
 
 
 
-
-
+# Add product with variants and quantity to shopping cart
+@session_login_required
 def add_to_cart(request, product_id):
     product = get_object_or_404(Product, id=product_id)
     cart = request.session.get('cart', {})
@@ -190,8 +202,8 @@ def add_to_cart(request, product_id):
 
 
 
-
-
+# Update cart item quantity (increase or decrease)
+@session_login_required
 def update_cart(request, cart_key, action):
     cart = request.session.get('cart', {})
 
@@ -210,16 +222,17 @@ def update_cart(request, cart_key, action):
 
 
 
-
-
+# Display purchase summary for checkout (cart and direct purchase)
+@session_login_required
 def purchase_view(request):
     cart = request.session.get('cart', {})
     direct_purchase = request.session.get('direct_purchase', None)
 
-    # 计算总价
-    total_price = sum(item["price"] * item["quantity"] for item in cart.values())
-    if direct_purchase:  # If there are products that can be purchased immediately
-        total_price += direct_purchase["price"] * direct_purchase["quantity"]
+    # total_price = sum(item["price"] * item["quantity"] for item in cart.values())
+    # if direct_purchase:  # If there are products that can be purchased immediately
+    #     total_price += direct_purchase["price"] * direct_purchase["quantity"]
+
+    total_price = calculate_total_price(cart, direct_purchase)
 
     shipping_fee = 5.00  # Set a flat shipping rate
     actual_payment = total_price + shipping_fee
@@ -245,8 +258,8 @@ def purchase_view(request):
 
 
 
-
-
+# Create order based on shopping cart and direct purchase items
+@session_login_required
 def create_order_view(request):
     cart = request.session.get('cart', {})  # Items in the shopping cart
     direct_purchase = request.session.get('direct_purchase', None)  # Items to buy now
@@ -258,16 +271,20 @@ def create_order_view(request):
     # Generate Order ID
     order_id = f"#{random.randint(100000000000, 999999999999)}"
 
-    # Calculate the total price
-    total_price = 0
+    # # Calculate the total price
+    # total_price = 0
+    #
+    # # Calculate the total price of items in the shopping cart
+    # if cart:
+    #     total_price += sum(item["price"] * item["quantity"] for item in cart.values())
+    #
+    # # Calculate the total price of a Buy It Now item
+    # if direct_purchase:
+    #     total_price += direct_purchase["price"] * direct_purchase["quantity"]
 
-    # Calculate the total price of items in the shopping cart
-    if cart:
-        total_price += sum(item["price"] * item["quantity"] for item in cart.values())
 
-    # Calculate the total price of a Buy It Now item
-    if direct_purchase:
-        total_price += direct_purchase["price"] * direct_purchase["quantity"]
+    total_price = calculate_total_price(cart, direct_purchase)
+
 
     shipping_fee = 5.00  # Set a flat shipping rate
     actual_payment = total_price + shipping_fee  # Calculate final payment amount
@@ -311,6 +328,9 @@ def create_order_view(request):
     return redirect("order_detail", order_id=order.order_id)
 
 
+
+# Display paginated order list
+@session_login_required
 def order_list_view(request):
     orders = Order.objects.all().order_by("-created_at")  # Sort by creation time in descending order
 
@@ -324,6 +344,9 @@ def order_list_view(request):
 
 
 
+
+# Delete selected orders
+@session_login_required
 def delete_orders_view(request):
     if request.method == "POST":
         order_ids = request.POST.getlist("order_ids")  # Get the order ID to be deleted
@@ -339,6 +362,8 @@ def delete_orders_view(request):
 
 
 
+# Display detailed information of a specific order
+@session_login_required
 def order_detail_view(request, order_id):
     order = get_object_or_404(Order, order_id=order_id)
 
@@ -349,6 +374,10 @@ def order_detail_view(request, order_id):
     })
 
 
+
+
+# Handle direct purchase of a product with variants and quantity
+@session_login_required
 def direct_purchase_view(request, product_id):
     product = get_object_or_404(Product, id=product_id)
 
@@ -373,3 +402,5 @@ def direct_purchase_view(request, product_id):
     request.session.modified = True  # Marks the session as changed
 
     return redirect("purchase_direct")   # Go to payment page
+
+
